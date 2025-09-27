@@ -1,0 +1,3 @@
+para usar o seed
+
+npm run seed:users
