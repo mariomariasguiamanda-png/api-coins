@@ -8,6 +8,8 @@ import administradorRoutes from "./administradorRoute.js";
 import atividadeRoutes from "./atividadeRoute.js";
 import resumoRoutes from "./resumoRoute.js";
 import notificacaoRoutes from "./notificacaoRoute.js";
+import cadastroRoutes from "./cadastroRoute.js";
+import senhaRoutes from "./senhaRoute.js";
 
 const router = express.Router();
 
@@ -24,5 +26,7 @@ router.use("/administradores", administradorRoutes);
 router.use("/atividades", atividadeRoutes);
 router.use("/resumos", resumoRoutes);
 router.use("/notificacoes", notificacaoRoutes);
+router.use("/cadastros", cadastroRoutes);
+router.use("/senha", senhaRoutes);
 
 export default router;

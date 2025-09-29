@@ -26,9 +26,9 @@ export const administradorController = {
 
   // Criar usuário (professor ou aluno)
   criarUsuario: asyncHandler(async (req, res) => {
-    const { nome, email, senha, tipoUsuario, cpf } = req.body;
+    const { nome, email, senha, tipoUsuario } = req.body;
 
-    if (!nome || !email || !senha || !tipoUsuario || !cpf) {
+    if (!nome || !email || !senha || !tipoUsuario) {
       return res.status(400).json({ message: "Dados incompletos" });
     }
 
@@ -38,11 +38,6 @@ export const administradorController = {
       return res.status(400).json({ message: "E-mail já cadastrado" });
     }
 
-    const existingCpf = await Usuario.findOne({ where: { cpf } });
-    if (existingCpf) {
-      return res.status(400).json({ message: "CPF já cadastrado" });
-    }
-
     const hash = await bcrypt.hash(senha, 10);
 
     const user = await Usuario.create({
@@ -50,7 +45,6 @@ export const administradorController = {
       email,
       senha: hash,
       tipoUsuario,
-      cpf,
     });
 
     res.status(201).json({
@@ -64,7 +58,7 @@ export const administradorController = {
   // Listar usuários
   listarUsuarios: asyncHandler(async (req, res) => {
     const usuarios = await Usuario.findAll({
-      attributes: ["id", "nome", "email", "tipoUsuario", "cpf"],
+      attributes: ["id", "nome", "email", "tipoUsuario"],
     });
     res.json(usuarios);
   }),

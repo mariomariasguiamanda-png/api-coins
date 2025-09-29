@@ -1,12 +1,10 @@
-// src/models/UsuariosModel.js
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/postgres.js";
 
-const Usuario = sequelize.define(
-  "usuarios",
+const Cadastro = sequelize.define(
+  "cadastros",
   {
-    id: {
-      field: "id_usuario",
+    idCadastro: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -19,18 +17,16 @@ const Usuario = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
       unique: true,
+      validate: { isEmail: true },
     },
     senha: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    tipoUsuario: {
-      field: "tipo_usuario",
-      // Mantive os valores em pt (aluno/professor) e adicionei admin.
-      // Se preferir usar 'student'/'teacher' etc, me diz que eu altero.
-      type: DataTypes.ENUM("aluno", "professor", "admin"),
+    perfil: {
+      type: DataTypes.ENUM("student", "teacher", "admin"),
       allowNull: false,
-      defaultValue: "aluno",
+      defaultValue: "student",
     },
     instituicao: {
       type: DataTypes.STRING(255),
@@ -41,16 +37,14 @@ const Usuario = sequelize.define(
       allowNull: true,
     },
     criadoEm: {
-      field: "criado_em",
       type: DataTypes.DATE,
-      allowNull: false,
       defaultValue: DataTypes.NOW,
     },
   },
   {
-    freezeTableName: true,
+    tableName: "cadastros",
     timestamps: false,
   }
 );
 
-export default Usuario;
+export default Cadastro;

@@ -12,7 +12,7 @@ export const alunoController = {
   // Dados básicos do aluno
   me: asyncHandler(async (req, res) => {
     const aluno = await Usuario.findByPk(req.user.id, {
-      attributes: ["id", "nome", "email", "tipoUsuario", "cpf"],
+      attributes: ["id", "nome", "email", "tipoUsuario"],
     });
 
     if (!aluno || aluno.tipoUsuario !== "aluno") {

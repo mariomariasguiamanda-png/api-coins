@@ -7,6 +7,8 @@ import TagAtividade from "./TagsAtividadesModel.js";
 import Resumo from "./ResumosModel.js";
 import Notificacao from "./NotificacoesModel.js";
 import TransacaoMoeda from "./TransacoesMoedasModel.js";
+import Cadastro from "./CadastroModel.js";
+import PasswordResetToken from "./PasswordResetToken.js";
 
 //
 // Associações
@@ -14,7 +16,10 @@ import TransacaoMoeda from "./TransacoesMoedasModel.js";
 
 // 🔹 Usuario -> Notificações (1:N)
 Usuario.hasMany(Notificacao, { foreignKey: "idUsuario", as: "notificacoes" });
-Notificacao.belongsTo(Usuario, { foreignKey: "idUsuario", as: "usuario" });
+Notificacao.belongsTo(Usuario, {
+  foreignKey: "idUsuario",
+  as: "usuarioNotificacao",
+});
 
 // 🔹 Usuario -> Resumos (1:N)   (um aluno cria vários resumos)
 Usuario.hasMany(Resumo, { foreignKey: "id", sourceKey: "id", as: "resumos" });
@@ -23,6 +28,16 @@ Resumo.belongsTo(Usuario, { foreignKey: "id", targetKey: "id", as: "aluno" });
 // 🔹 Usuario -> Transações (1:N)
 Usuario.hasMany(TransacaoMoeda, { foreignKey: "idAluno", as: "transacoes" });
 TransacaoMoeda.belongsTo(Usuario, { foreignKey: "idAluno", as: "aluno" });
+
+// 🔹 Cadastro -> PasswordResetTokens
+Cadastro.hasMany(PasswordResetToken, {
+  foreignKey: "idCadastro",
+  as: "resetTokens",
+});
+PasswordResetToken.belongsTo(Cadastro, {
+  foreignKey: "idCadastro",
+  as: "usuarioReset",
+});
 
 // 🔹 Usuario <-> Turma (N:N via AlunoTurma)
 Usuario.belongsToMany(Turma, {
@@ -40,11 +55,18 @@ Turma.belongsToMany(Usuario, {
 
 // 🔹 Atividade -> Tags (1:N)
 Atividade.hasMany(TagAtividade, { foreignKey: "idAtividade", as: "tags" });
-TagAtividade.belongsTo(Atividade, { foreignKey: "idAtividade", as: "atividade" });
+TagAtividade.belongsTo(Atividade, {
+  foreignKey: "idAtividade",
+  as: "atividade",
+});
 
 // 🔹 Atividade -> Resumos (1:N opcional)
 Atividade.hasMany(Resumo, { foreignKey: "id", sourceKey: "id", as: "resumos" });
-Resumo.belongsTo(Atividade, { foreignKey: "id", targetKey: "id", as: "atividade" });
+Resumo.belongsTo(Atividade, {
+  foreignKey: "id",
+  targetKey: "id",
+  as: "atividade",
+});
 
 // (Administrador por enquanto não tem associação explícita, mas pode ganhar
 // se futuramente precisar vincular logs, configs, etc.)
@@ -62,4 +84,6 @@ export {
   Resumo,
   Notificacao,
   TransacaoMoeda,
+  Cadastro,
+  PasswordResetToken,
 };

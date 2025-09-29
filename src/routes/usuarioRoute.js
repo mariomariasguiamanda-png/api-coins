@@ -4,6 +4,11 @@ import { auth } from "../middlewares/auth.js";
 
 const router = express.Router();
 
+// Rota de teste
+router.get("/", (req, res) => {
+  res.json({ message: "Rota de usuários funcionando!", timestamp: new Date() });
+});
+
 // Cadastro
 router.post("/register", usuarioController.create);
 

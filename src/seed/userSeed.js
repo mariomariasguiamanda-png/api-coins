@@ -14,21 +14,18 @@ import { Usuario } from "../models/index.js";
         email: "admin@coins.com",
         senha: "admin123",
         tipoUsuario: "admin",
-        cpf: "00000000000",
       },
       {
         nome: "Aluno Teste",
         email: "aluno@coins.com",
         senha: "aluno123",
         tipoUsuario: "aluno",
-        cpf: "11111111111",
       },
       {
         nome: "Professor Teste",
         email: "professor@coins.com",
         senha: "prof123",
         tipoUsuario: "professor",
-        cpf: "22222222222",
       }
     ];
 
@@ -41,7 +38,6 @@ import { Usuario } from "../models/index.js";
           email: seed.email,
           senha: hash,
           tipoUsuario: seed.tipoUsuario,
-          cpf: seed.cpf,
         });
         console.log(`✅ Usuário ${seed.tipoUsuario} criado: ${seed.email} / ${seed.senha}`);
       } else {
